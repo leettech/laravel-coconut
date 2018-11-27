@@ -1,0 +1,29 @@
+{
+    "name": "leettech/laravel-coconut",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josimar Lemos",
+            "email": "lemosxd01@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "3.4.*",
+        "phpunit/phpunit": "~5.0",
+        "mockery/mockery": "0.9.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Leet\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
