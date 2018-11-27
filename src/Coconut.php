@@ -53,6 +53,6 @@ class Coconut
     {
         $config = config('coconut.s3');
 
-        return sprintf('s3://%s:%s@%s', $config['access_key'], $config['secret_key'], $config['bucket']);
+        return sprintf('s3://%s:%s@%s/%s', $config['access_key'], $config['secret_key'], $config['bucket'], $path);
     }
 }
