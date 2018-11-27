@@ -16,32 +16,39 @@ class Coconut
 
     public function setSource(string $source) : Coconut
     {
-        $this->source = $source;
+        $this->source = "set source = {$source}";
 
         return $this;
     }
     
     public function setWebhook(string $webhook) : Coconut
     {
-        $this->webhook = $webhook;
+        $this->webhook = "set webhook = {$webhook}";
 
         return $this;
     }
    
-    public function setOutput(string $format, string $path) : Coconut
+    public function setOutput(string $format, string $path, array $params = []) : Coconut
     {
-        $this->outputs[$format] = $this->formatPath($path);
+        $output = sprintf('-> %s = %s', $format, $this->formatPath($path));
+
+        if ($params) {
+            $output .= sprintf(', %s', http_build_query($params, '', ', '));
+        }
+        
+        $this->outputs[] = $output;
 
         return $this;
     }
 
-    public function getConfig() : array
+    public function getConfig() : string
     {
-        return [
-            'source' => $this->source,
-            'webhook' => $this->webhook,
-            'outputs' => $this->outputs,
-        ];
+        return join("\n", [
+            $this->source,
+            $this->webhook,
+            '',
+            $this->formatOutputs(),
+        ]);
     }
 
     public function createJob()
@@ -53,6 +60,11 @@ class Coconut
     {
         $config = config('coconut.s3');
 
-        return sprintf('s3://%s:%s@%s/%s', $config['access_key'], $config['secret_key'], $config['bucket'], $path);
+        return sprintf('s3://%s:%s@%s%s', $config['access_key'], $config['secret_key'], $config['bucket'], $path);
+    }
+
+    protected function formatOutputs() : string
+    {
+        return join("\n", $this->outputs);
     }
 }

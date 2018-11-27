@@ -13,4 +13,11 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [\Leet\CoconutServiceProvider::class];
     }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('coconut.s3.access_key', 'key');
+        $app['config']->set('coconut.s3.secret_key', 'secret');
+        $app['config']->set('coconut.s3.bucket', 'bucket');
+    }
 }

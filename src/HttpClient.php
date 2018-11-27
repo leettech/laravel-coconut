@@ -14,11 +14,16 @@ class HttpClient
         $this->client = $client;
     }
 
-    public function post(string $url, array $data)
+    public function post(string $url, string $payload)
     {
-        return $this->decode(
-            $this->client->post($url, $data)
-        );
+        $response = $this->client->post($url, [
+            'body' => $payload,
+            'headers' => [
+                'Content-Type' => 'text/plain',
+            ]
+        ]);
+
+        return $this->decode($response);
     }
 
     protected function decode(Response $response)
