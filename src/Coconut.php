@@ -33,7 +33,7 @@ class Coconut
         $output = sprintf('-> %s = %s', $format, $this->formatPath($path));
 
         if ($params) {
-            $output .= sprintf(', %s', http_build_query($params, '', ', '));
+            $output .= sprintf(', %s', urldecode(http_build_query($params, '', ', ')));
         }
         
         $this->outputs[] = $output;
